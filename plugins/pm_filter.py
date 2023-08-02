@@ -31,16 +31,7 @@ SPELL_CHECK = {}
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def private_filter(client, message):
-    search = message.text
-    files = await get_search_results(search, offset=0, filter=True)
-
-    if message.text.startswith("/"):
-        return
-    
-    if not files:
-        await message.reply_text("No results found.")
-    else:
-        await manual_filters(client, message)
+    await manual_filters(client, message)
 
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
