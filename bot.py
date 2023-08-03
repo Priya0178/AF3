@@ -46,6 +46,7 @@ class Bot(Client):
         await Media.ensure_indexes()
         me = await self.get_me()
         temp.ME = me.id
+        self._link = None
         temp.U_NAME = me.username
         temp.B_NAME = me.first_name
         self.username = '@' + me.username
