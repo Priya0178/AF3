@@ -442,6 +442,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
+    elif query.data == "patty":
+       await client.send_message(query.from_user.id, f"<b>✍️ Eɴᴛᴇʀ Tʜᴇ Mᴏᴠɪᴇ Nᴀᴍᴇ\n\nWrite the name of the movie you want and send it..!!!\n\n📌 Uꜱᴇ Cᴏʀʀᴇᴄᴛ Gᴏᴏgle Sᴘᴇʟʟɪɴɢ ⚠️</b>")
+       return
     elif query.data == "about":
         buttons = [[
             InlineKeyboardButton('🤖 Updates', url='https://t.me/TeamEvamaria'),
