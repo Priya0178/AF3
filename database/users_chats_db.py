@@ -9,7 +9,7 @@ class Database:
         self.db = self._client[database_name]
         self.col = self.db.users
         self.grp = self.db.groups
-
+        self.req = self.db.reqs
 
     def new_user(self, id, name):
         return dict(
@@ -142,5 +142,22 @@ class Database:
     async def get_db_size(self):
         return (await self.db.command("dbstats"))['dataSize']
 
+    async def add_req(self, user_id, first_name, username, date):
+        try:
+            await self.req.insert_one({"_id": int(user_id),"user_id": int(user_id), "first_name": first_name, "username": username, "date": date})
+        except:
+            pass
 
+    async def get_req(self, user_id):
+        return await self.req.find_one({"user_id": int(user_id)})
+
+    async def delete_all_req(self):
+        await self.req.delete_many({})
+
+    async def get_all_req_count(self):
+        count = 0
+        async for req in self.req.find({}):
+            count += 1
+        return count
+        
 db = Database(DATABASE_URI, DATABASE_NAME)
