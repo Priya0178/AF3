@@ -651,12 +651,13 @@ async def auto_filter(client, msg, spoll=False):
         settings = await get_settings(msg.message.chat.id)
         message = msg.message.reply_to_message  # msg will be callback query
         search, files, offset, total_results = spoll
-    pre = 'filep' if settings['file_secure'] else 'file'
-    if settings["button"]:
+        pre = 'filep' if settings['file_secure'] else 'file'
+    if settings['button']:
         btn = [
             [
-                InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}] {re.sub(r'\[.*?\]\s*', '', file.file_name)}", callback_data=f'{pre}#{file.file_id}'
+            InlineKeyboardButton(
+                text=f"[{get_size(file.file_size)}] {re.sub(r'\\[.*?\\]\\s*', '', file.file_name)}",
+                callback_data=f'files#{file.file_id}'
                 ),
             ]
             for file in files
@@ -665,17 +666,16 @@ async def auto_filter(client, msg, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"{file.file_name}",
-                    callback_data=f'{pre}#{file.file_id}',
-                ),
+                    text=file.file_name,
+                    callback_data=f'files#{file.file_id}'
+               ),
                 InlineKeyboardButton(
-                    text=f"{get_size(file.file_size)}",
-                    callback_data=f'{pre}#{file.file_id}',
+                    text=get_size(file.file_size),
+                    callback_data=f'files_#{file.file_id}',
                 ),
             ]
             for file in files
         ]
-
     if offset != "":
         key = f"{message.chat.id}-{message.id}"
         BUTTONS[key] = search
