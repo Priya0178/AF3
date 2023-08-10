@@ -637,7 +637,7 @@ async def auto_filter(client, msg, spoll=False):
             if not files:
                 ntn = [
                     [
-                       InlineKeyboardButton("🔍 Search", url=f"https://google.com/search?q={search}")
+                       InlineKeyboardButton("🔍 Search On Google ", url=f"https://google.com/search?q={search}")
                     ]
                 ]
                 k = await message.reply(f"<b>No Movie Result found.\nSearch in Google for correct Spelling and Year</b>", reply_markup=InlineKeyboardMarkup(ntn))
