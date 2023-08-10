@@ -72,7 +72,7 @@ async def next_page(bot, query):
             [
                 InlineKeyboardButton(
                     text=f"[{get_size(file.file_size)}] {{re.sub(r'\\[.*?\\]\\s*', '', file.file_name)}}",
-                    callback_data=f'files#{file.file_id}'
+                    callback_data=f'{pre}#{file.file_id}'
                 ),
             ]
             for file in files
