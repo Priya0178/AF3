@@ -640,7 +640,7 @@ async def auto_filter(client, msg, spoll=False):
                        InlineKeyboardButton("🔍 Search", url=f"https://google.com/search?q={search}")
                     ]
                 ]
-                k = await query.message.edit('This Movie Not Found In DataBase', reply_markup=InlineKeyboardMarkup(ntn))
+                k = await message.reply('This Movie Not Found In DataBase', reply_markup=InlineKeyboardMarkup(ntn))
                 await asyncio.sleep(300)
                 await k.delete()
         else:
