@@ -221,11 +221,9 @@ async def start(client, message):
             title = file.file_name
             size=get_size(file.file_size)
             f_caption = f"<code>{title}</code>"
-            f_caption += f"\n\n<b>Files Will Be Deleted Within 10 Mins..\nPlease Make Sure That You Forward These Files To Your Saved Message or Friends.</b>"
             if CUSTOM_FILE_CAPTION:
                 try:
                     f_caption=CUSTOM_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='')
-                    f_caption += f"\n\n<b>Files Will Be Deleted Within 10 Mins..\nPlease Make Sure That You Forward These Files To Your Saved Message or Friends.</b>"
                 except:
                     return
             await msg.edit_caption(f_caption)
@@ -242,23 +240,18 @@ async def start(client, message):
     if CUSTOM_FILE_CAPTION:
         try:
             f_caption=CUSTOM_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='' if f_caption is None else f_caption)
-            f_caption += f"\n\n<b>Files Will Be Deleted Within 10 Mins..\nPlease Make Sure That You Forward These Files To Your Saved Message or Friends.</b>"
         except Exception as e:
             logger.exception(e)
             f_caption=f_caption
-            f_caption += f"\n\n<b>Files Will Be Deleted Within 10 Mins..\nPlease Make Sure That You Forward These Files To Your Saved Message or Friends.</b>"
     if f_caption is None:
         f_caption = f"{files.file_name}"
-        f_caption += f"\n\n<b>Files Will Be Deleted Within 10 Mins..\nPlease Make Sure That You Forward These Files To Your Saved Message or Friends.</b>"
     batman = re.sub(r'@\w+', '', f_caption)
-    xd = await client.send_cached_media(
+    await client.send_cached_media(
         chat_id=message.from_user.id,
         file_id=file_id,
         caption=batman,
         protect_content=True if pre == 'filep' else False,
-        )
-    await asyncio.sleep(600)
-    await xd.delete()          
+    ) 
 
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
