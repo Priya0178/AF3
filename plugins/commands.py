@@ -44,10 +44,6 @@ async def start(client, message):
         buttons = [[
             InlineKeyboardButton('🎬 Rᴇqᴜᴇꜱᴛ Mᴏᴠɪᴇ', callback_data='patty'),
             InlineKeyboardButton('Sᴇᴀʀᴄʜ Mᴏᴠɪᴇ 🎭', switch_inline_query_current_chat='')
-        ], [
-            InlineKeyboardButton('⚙️ Bᴏᴛ Uᴩᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ ⚙️', url='https://t.me/+xLg-GrBkHcJmMmM1')
-            ],[
-            InlineKeyboardButton('💻 Oᴛᴛ Mᴏᴠɪᴇ Uᴩᴅᴀᴛᴇꜱ 💻', url='https://t.me/+CS7ywuF7ZeA3YWJl')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
@@ -93,10 +89,6 @@ async def start(client, message):
         buttons = [[
             InlineKeyboardButton('🎬 Rᴇqᴜᴇꜱᴛ Mᴏᴠɪᴇ', callback_data='patty'),
             InlineKeyboardButton('Sᴇᴀʀᴄʜ Mᴏᴠɪᴇ 🎭', switch_inline_query_current_chat='')
-        ], [
-            InlineKeyboardButton('⚙️ Bᴏᴛ Uᴩᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ ⚙️', url='https://t.me/+xLg-GrBkHcJmMmM1')
-            ],[
-            InlineKeyboardButton('💻 Oᴛᴛ Mᴏᴠɪᴇ Uᴩᴅᴀᴛᴇꜱ 💻', url='https://t.me/+CS7ywuF7ZeA3YWJl')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
