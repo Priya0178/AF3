@@ -1,4 +1,5 @@
-import os
+
+ os
 import logging
 import random
 import asyncio
@@ -242,6 +243,8 @@ async def start(client, message):
     if f_caption is None:
         f_caption = f"{files.file_name}"
     batman = re.sub(r'@\w+', '', f_caption)
+    batman = re.sub('#𝙊𝙍𝙂𝙋𝙧𝙞𝙢𝙚', '', batman)
+    batman = re.sub('#𝙉𝙤𝟏', '', batman)
     await client.send_cached_media(
         chat_id=message.from_user.id,
         file_id=file_id,
