@@ -244,6 +244,7 @@ async def start(client, message):
     batman = re.sub(r'@\w+', '', f_caption)
     batman = re.sub('#𝙊𝙍𝙂𝙋𝙧𝙞𝙢𝙚', '', batman)
     batman = re.sub('#𝙉𝙤𝟏', '', batman)
+    batman = re.sub('#𝙐𝙃𝘿𝙋𝙧𝙞𝙢𝙚', '', batman)
     await client.send_cached_media(
         chat_id=message.from_user.id,
         file_id=file_id,
