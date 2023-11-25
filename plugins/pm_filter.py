@@ -464,7 +464,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
            client.send_message(query.from_user.id, f"<b>✍️ Eɴᴛᴇʀ Tʜᴇ Mᴏᴠɪᴇ Nᴀᴍᴇ\n\nWrite the name of the movie you want and send it..!!!\n\n📌 Uꜱᴇ Cᴏʀʀᴇᴄᴛ Gᴏᴏgle Sᴘᴇʟʟɪɴɢ ⚠️</b>")
        except:
            pass
-        return
     elif query.data == "about":
         buttons = [[
             InlineKeyboardButton('🤖 Updates', url='https://t.me/TeamEvamaria'),
