@@ -84,8 +84,7 @@ scheduler.add_job(restart, 'interval', minutes=2)
 scheduler.start()
 
 try:
-    async def bot_boot():
-        app = Bot()
-        await app.run()
+    app = Bot()
+    app.run()
 except KeyboardInterrupt:
     shut()
