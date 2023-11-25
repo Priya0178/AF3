@@ -41,7 +41,7 @@ async def give_filter(client, message):
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pvt_filter(client, message):
     try:
-        await message.("<b> Searching</b>")
+        await message.reply("<b> Searching</b>")
         await message.reply("🔍")
         k = await manual_filters(client, message)
         if k == False:
