@@ -467,13 +467,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "patty":
        try:
-           await query.answer("<b>Loading ⏳</b>",show_alert=True)
+           await query.answer("Loading ⏳",show_alert=True)
            await client.send_message(query.from_user.id, f"<b>✍️ Eɴᴛᴇʀ Tʜᴇ Mᴏᴠɪᴇ Nᴀᴍᴇ\n\nWrite the name of the movie you want and send it..!!!\n\n📌 Uꜱᴇ Cᴏʀʀᴇᴄᴛ Gᴏᴏgle Sᴘᴇʟʟɪɴɢ ⚠️</b>")
        except Exception as e:
            logging.info(e)
     elif query.data == "about":
         buttons = [[
-            InlineKeyboardButton('🤖 Updates', url='https://t.me/TeamEvamaria'),
+            InlineKeyboardButton('🤖 Updates', url='https://t.me/searchonbot'),
             InlineKeyboardButton('♥️ Source', callback_data='source')
         ], [
             InlineKeyboardButton('🏠 Home', callback_data='start'),
