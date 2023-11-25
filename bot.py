@@ -85,6 +85,6 @@ scheduler.start()
 
 try:
     app = Bot()
-    app.run()
+    await app.run()
 except KeyboardInterrupt:
     shut()
