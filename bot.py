@@ -77,4 +77,4 @@ try:
     app = Bot()
     app.run()
 except KeyboardInterrupt:
-        Bot.stop()
+        app.stop()
