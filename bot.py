@@ -84,8 +84,6 @@ async def main():
 
     except KeyboardInterrupt:
         logging.info("Bot interrupted by user.")
-        pass
-    finally:
         await app.stop_bot()
 
 if __name__ == "__main__":
