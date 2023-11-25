@@ -80,7 +80,7 @@ async def restart():
     os.execvp(sys.executable, [sys.executable, 'bot.py'])
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(loop.run_until_complete(restart()), 'interval', minutes=2)
+scheduler.add_job((restart(), 'interval', minutes=2)
 scheduler.start()
 
 try:
