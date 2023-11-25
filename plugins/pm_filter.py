@@ -424,8 +424,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False
         )
-            except:
-                pass
+        except:
+            pass
     elif query.data == "pages":
         try:
             return await query.answer()
