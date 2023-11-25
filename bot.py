@@ -72,10 +72,13 @@ class Bot(Client):
                 current += 1
                 
 async def signal_handler():
-    await Bot.stop()
+    await Bot.stop(block=True)
     
 signal.signal(signal.SIGTERM, signal_handler)
 
     
-app = Bot()
-app.run()
+try:
+    app = Bot()
+    app.run()
+finally:
+    Bot.stop()
