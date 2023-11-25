@@ -80,7 +80,7 @@ async def shut():
 async def restart():
     while True:
         app = Bot()
-        app.run()
+        await app.run()
         print("Bot is online...")
         asyncio.sleep(120)
         await shut()
