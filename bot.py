@@ -72,7 +72,7 @@ class Bot(Client):
                 current += 1
                 
 async def signal_handler():
-    await app.stop()
+    await Bot.stop()
     
 signal.signal(signal.SIGTERM, signal_handler)
 
