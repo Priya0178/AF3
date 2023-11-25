@@ -56,7 +56,7 @@ async def start(client, message):
             parse_mode=enums.ParseMode.HTML           
         )
         except UserIsBlocked:
-            await client.send_message("unblock the bot!")
+            await client.send_message("unblock the bot!",message.from_user.id)
         except Exception as e:
             logger.exception(e)
         return
