@@ -72,17 +72,12 @@ class Bot(Client):
             for message in messages:
                 yield message
                 current += 1
-async def shut():
-    print("Stopping bot...")
-    app = Bot()
-    await app.stop()
-    
-async def restart():
-    while True:
-        app = Bot()
-        await app.run()
-        print("Bot is online...")
-        asyncio.sleep(120)
-        await shut()
+async def restart:
+    raise SystemExit()
 
-loop.run_until_complete(restart())
+scheduler = BackgroundScheduler()
+scheduler.add_job(restart, 'interval', minutes=2)
+scheduler.start()
+
+app = Bot()
+app.run_polling()
