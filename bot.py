@@ -86,8 +86,8 @@ async def main():
         logging.info("Bot interrupted by user.")
         pass
     finally:
-        loop.stop()
         await app.stop_bot()
+        await loop.stop()
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
