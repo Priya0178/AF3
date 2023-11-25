@@ -120,7 +120,7 @@ async def next_page(bot, query):
             reply_markup=InlineKeyboardMarkup(btn)
         )
         await query.answer()
-    except MessageNotModified:
+    except:
         pass
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
