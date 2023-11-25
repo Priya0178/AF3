@@ -1,6 +1,7 @@
 import signal
 import logging
 import logging.config
+import asyncio
 from typing import Union, Optional, AsyncGenerator
 from pyrogram import Client, types
 
@@ -37,7 +38,7 @@ class Bot(Client):
             sleep_threshold=5,
         )
 
-    async def start(self):
+    async def start_bot(self):
         b_users, b_chats = await db.get_banned()
         temp.BANNED_USERS = b_users
         temp.BANNED_CHATS = b_chats
@@ -50,11 +51,11 @@ class Bot(Client):
         temp.B_NAME = me.first_name
         self.username = '@' + me.username
         logging.info(name)
-        
-    async def stop(self, *args):
+
+    async def stop_bot(self):
         await super().stop()
         logging.info("Bot stopped. Bye.")
-        
+
     async def iter_messages(
         self,
         chat_id: Union[int, str],
@@ -70,15 +71,22 @@ class Bot(Client):
             for message in messages:
                 yield message
                 current += 1
-app = Bot()            
+app = Bot()
 async def signal_handler():
-    await app.stop(block=True)
-    
+    await app.stop_bot()
+
 signal.signal(signal.SIGTERM, signal_handler)
 
-try:
-    # Start the bot
-    await app.start()
 
-finally:
-    await app.stop()
+async def main():
+    try:
+        await app.start_bot()
+
+    except KeyboardInterrupt:
+        logging.info("Bot interrupted by user.")
+        pass
+    finally:
+        await app.stop(block=False)
+
+if __name__ == "__main__":
+    asyncio.run(main())
