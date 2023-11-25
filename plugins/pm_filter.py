@@ -300,7 +300,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 f"Some error occurred!!",
                 parse_mode=enums.ParseMode.MARKDOWN
             )
-        return await query.answer('Piracy Is Crime')
     elif query.data == "backcb":
         await query.answer()
 
@@ -429,11 +428,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
         except:
             pass
-    elif query.data == "pages":
-        try:
-            return await query.answer()
-        except:
-            pass
     elif query.data == "start":
         buttons = [[
             InlineKeyboardButton('🎬 Rᴇqᴜᴇꜱᴛ Mᴏᴠɪᴇ', callback_data='patty'),
@@ -447,7 +441,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
-        return await query.answer('Piracy Is Crime')
+        return
     elif query.data == "help":
         buttons = [[
             InlineKeyboardButton('Manual Filter', callback_data='manuelfilter'),
@@ -467,7 +461,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "patty":
        try:
-           await query.answer("Loading ⏳",show_alert=True)
            await client.send_message(query.from_user.id, f"<b>✍️ Eɴᴛᴇʀ Tʜᴇ Mᴏᴠɪᴇ Nᴀᴍᴇ\n\nWrite the name of the movie you want and send it..!!!\n\n📌 Uꜱᴇ Cᴏʀʀᴇᴄᴛ Gᴏᴏgle Sᴘᴇʟʟɪɴɢ ⚠️</b>")
        except Exception as e:
            logging.info(e)
