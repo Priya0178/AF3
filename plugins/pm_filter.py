@@ -40,6 +40,7 @@ async def give_filter(client, message):
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pvt_filter(client, message):
+    user_id = message.from_user.id
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
@@ -83,7 +84,7 @@ async def next_page(bot, query):
 
     if not files:
         return
-    settings = await get_settings(query.message.chat.id)
+    settings = await get_settings(query.from_user.id)
     if settings['button']:
         btn = [
             [
