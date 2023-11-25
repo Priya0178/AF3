@@ -73,5 +73,8 @@ class Bot(Client):
                 current += 1
 
 
-app = Bot()
-app.run()
+try:
+    app = Bot()
+    app.run()
+except KeyboardInterrupt:
+        Bot.stop()
