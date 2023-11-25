@@ -53,10 +53,10 @@ async def start(client, message):
             photo=random.choice(PICS),
             caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        except:
-            pass            
+            parse_mode=enums.ParseMode.HTML           
         )
+        except Exception as e:
+            logger.exception(e)
         return
     if AUTH_CHANNEL and not await is_subscribed(client, message):
         try:
