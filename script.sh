@@ -5,6 +5,8 @@ while true; do
     
     # Run the Python script
     python3 "$script_name" &
+    # Sleep for 2 minutes before running the script again
+    sleep 120
     existing_pid=$(pgrep -f "$script_name")
 
     if [ -n "$existing_pid" ]; then
@@ -12,6 +14,4 @@ while true; do
         echo "Killing existing bot.py process with PID $existing_pid"
         kill "$existing_pid"
     fi
-    # Sleep for 2 minutes before running the script again
-    sleep 120
 done
