@@ -41,7 +41,7 @@ async def give_filter(client, message):
 
         if elapsed_time <= wait_time:
             # User is still in cooldown, show the cooldown message
-            await message.reply_text(f"Cooldown: Please wait {30 - int(elapsed_time)} seconds before sending another message.")
+            await message.reply_text(f"Cooldown: Please wait {wait_time - int(elapsed_time)} seconds before sending another message.")
             return
     k = await manual_filters(client, message)
     if k == False:
@@ -58,7 +58,7 @@ async def pvt_filter(client, message):
 
         if elapsed_time <= wait_time:
             # User is still in cooldown, show the cooldown message
-            await message.reply_text(f"Cooldown: Please wait {30 - int(elapsed_time)} seconds before sending another message.")
+            await message.reply_text(f"Cooldown: Please wait {wait_time - int(elapsed_time)} seconds before sending another message.")
             return
     try:
         cooldown_dict[user_id] = current_time
