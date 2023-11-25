@@ -85,4 +85,4 @@ async def restart():
         asyncio.sleep(120)
         await shut()
 
-loop.run_until_complete(restart)
+loop.run_until_complete(restart())
