@@ -638,6 +638,8 @@ async def auto_filter(client, msg, spoll=False):
             files, offset, total_results = await get_search_results(search.lower(), offset=0, filter=True)
             if not files:
                 xxx = search.replace(" ", "+")
+                for i in range(50):
+                    print(xxx)
                 ntn = [
                     [
                        InlineKeyboardButton("🔍 Search On Google ", url=f"https://google.com/search?q={xxx}")
