@@ -102,7 +102,7 @@ async def send_for_index(bot, message):
         except ChatAdminRequired:
             return await message.reply('Make sure iam an admin in the chat and have permission to invite users.')
     else:
-        link = f"@{message.forward_from_chat.username}"
+        link = f"@{message.chat.username}"
     buttons = [
         [
             InlineKeyboardButton('Accept Index',
