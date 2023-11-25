@@ -1,10 +1,11 @@
 #!/bin/bash
 
-git stash
-git pull
-pip install -r requirements.txt
-script_name="bot.py"
-
+update() {
+    git stash
+    git pull
+    pip install -r requirements.txt
+    script_name="bot.py"
+}
 start_bot() {
     echo "Starting $script_name..."
     python3 "$script_name" &
@@ -21,7 +22,8 @@ stop_bot() {
 }
 
 while true; do
-    # Start the bot
+    update
+    sleep 10
     start_bot
 
     sleep 120
