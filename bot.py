@@ -26,7 +26,7 @@ name = f"""
 """
 
 loop = asyncio.get_event_loop()
-
+StartTime = time.time()
 class Bot(Client):
 
     def __init__(self):
