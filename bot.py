@@ -1,7 +1,5 @@
 import logging
 import logging.config
-from apscheduler.schedulers.background import BackgroundScheduler
-import time
 logging.config.fileConfig('logging.conf')
 logging.getLogger().setLevel(logging.INFO)
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
@@ -25,7 +23,6 @@ name = f"""
 ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ 
 """
 
-loop = asyncio.get_event_loop()
 class Bot(Client):
 
     def __init__(self):
@@ -72,8 +69,5 @@ class Bot(Client):
             for message in messages:
                 yield message
                 current += 1
-while True:
-    app = Bot()
-    app.run()
-    time.sleep(120)
-    raise SystemExit()
+app = Bot()
+app.run()
