@@ -1,21 +1,21 @@
 import signal
 import logging
 import logging.config
-logging.config.fileConfig('logging.conf')
-logging.getLogger().setLevel(logging.INFO)
-logging.getLogger("pyrogram").setLevel(logging.ERROR)
-logging.getLogger("imdbpy").setLevel(logging.ERROR)
-import asyncio
-from pyrogram import Client, __version__
-from pyrogram.raw.all import layer
+from typing import Union, Optional, AsyncGenerator
+from pyrogram import Client, types
+
+# Add your missing imports
 from database.ia_filterdb import Media
 from database.users_chats_db import db
 from info import SESSION, API_ID, API_HASH, BOT_TOKEN
 from utils import temp
-from typing import Union, Optional, AsyncGenerator
-from pyrogram import types
 
-name = f"""
+logging.config.fileConfig('logging.conf')
+logging.getLogger().setLevel(logging.INFO)
+logging.getLogger("pyrogram").setLevel(logging.ERROR)
+logging.getLogger("imdbpy").setLevel(logging.ERROR)
+
+name = """
 ██████╗ ██████╗ ██╗███╗   ███╗███████╗██╗  ██╗██╗   ██╗██████╗ 
 ██╔══██╗██╔══██╗██║████╗ ████║██╔════╝██║  ██║██║   ██║██╔══██╗
 ██████╔╝██████╔╝██║██╔████╔██║█████╗  ███████║██║   ██║██████╔╝
@@ -32,7 +32,7 @@ class Bot(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
-            workers=100,
+            workers=500,
             plugins={"root": "plugins"},
             sleep_threshold=5,
         )
@@ -70,15 +70,15 @@ class Bot(Client):
             for message in messages:
                 yield message
                 current += 1
-                
+app = Bot()            
 async def signal_handler():
-    await Bot.stop(block=True)
+    await app.stop(block=True)
     
 signal.signal(signal.SIGTERM, signal_handler)
 
-    
 try:
-    app = Bot()
-    app.run()
+    # Start the bot
+    await app.start()
+
 finally:
-    Bot.stop()
+    await app.stop()
