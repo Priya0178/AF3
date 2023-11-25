@@ -1,6 +1,6 @@
 import logging
 import logging.config
-
+from apscheduler.schedulers.background import BackgroundScheduler
 # Get logging configurations
 logging.config.fileConfig('logging.conf')
 logging.getLogger().setLevel(logging.INFO)
@@ -24,6 +24,7 @@ name = f"""
 ██║     ██║  ██║██║██║ ╚═╝ ██║███████╗██║  ██║╚██████╔╝██████╔╝
 ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ 
 """
+
 
 class Bot(Client):
 
@@ -72,9 +73,17 @@ class Bot(Client):
                 yield message
                 current += 1
 
+def restart():
+    print("Restarting bot...")
+    stop()
+    os.execvp(sys.executable, [sys.executable, 'bot.py'])
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(restart, 'interval', minutes=2)
+scheduler.start()
 
 try:
     app = Bot()
     app.run()
 except KeyboardInterrupt:
-        app.stop()
+        stop()
