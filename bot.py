@@ -1,3 +1,4 @@
+import signal
 import logging
 import logging.config
 logging.config.fileConfig('logging.conf')
@@ -69,5 +70,10 @@ class Bot(Client):
             for message in messages:
                 yield message
                 current += 1
+                
+signal.signal(signal.SIGTERM, signal_handler)
+async def signal_handler():
+    exit(0)
+    
 app = Bot()
 app.run()
