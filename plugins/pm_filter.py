@@ -2,7 +2,7 @@
 import asyncio
 import re
 import ast
-import math
+import math,time,base64
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from Script import script
 import pyrogram
@@ -28,7 +28,7 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
-
+cooldown_dict = {} 
 
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
@@ -40,7 +40,17 @@ async def give_filter(client, message):
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pvt_filter(client, message):
+    current_time = time.time()
+    if user_id in cooldown_dict:
+        last_time = cooldown_dict[user_id]
+        elapsed_time = current_time - last_time
+
+        if elapsed_time <= 30:
+            # User is still in cooldown, show the cooldown message
+            await message.reply_text(f"Cooldown: Please wait {30 - int(elapsed_time)} seconds before sending another message.")
+            return
     try:
+        cooldown_dict[user_id] = current_time
         await message.reply("<b> Searching</b>")
         await message.reply("🔍")
         k = await manual_filters(client, message)
