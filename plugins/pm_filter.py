@@ -383,10 +383,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
             return
         except Exception as e:
-            buttons = [
-                InlineKeyboardButton('Share Link🎭', url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")]
-            reply_markup = InlineKeyboardMarkup(buttons)
-            await query.message.reply(f"<b> Your Link Has Been Generated!</b>",reply_markup=reply_markup)
+            buttons = [InlineKeyboardButton('Share Link🎭', url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")]
+            reply_markup = InlineKeyboardMarkup([buttons])
+            await query.message.reply(f"<b>Your Link Has Been Generated!</b>", reply_markup=reply_markup)
             return
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
