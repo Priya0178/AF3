@@ -80,4 +80,4 @@ scheduler.add_job(restart, 'interval', minutes=2)
 scheduler.start()
 
 app = Bot()
-app.run_polling()
+app.run()
