@@ -72,11 +72,15 @@ class Bot(Client):
             for message in messages:
                 yield message
                 current += 1
-
+async def shut():
+    print("Stopping bot...")
+    await Bot.stop()
+    
 async def restart():
     print("Restarting bot...")
-    await Bot.stop()
+    await shut()
     os.execvp(sys.executable, [sys.executable, 'bot.py'])
+
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(restart, 'interval', minutes=2)
@@ -86,4 +90,4 @@ try:
     app = Bot()
     app.run()
 except KeyboardInterrupt:
-        await Bot.stop()
+    shut()
