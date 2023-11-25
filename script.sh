@@ -14,9 +14,9 @@ while true; do
     # Get the process ID of the existing bot.py process
     existing_pid=$(pgrep -f "$script_name")
 
-    if [ -n "$existing_pid" ]; then
-        # Kill the existing bot.py process
-        echo "Killing existing bot.py process with PID $existing_pid"
-        kill "$existing_pid"
+        if [ -n "$existing_pid" ]; then
+            # Kill the existing bot.py process
+            echo "Killing existing bot.py process with PID $existing_pid"
+            kill "$existing_pid"
     fi
 done
