@@ -80,7 +80,7 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 async def main():
     try:
-        await app.start_bot()
+        await app.start()
 
     except KeyboardInterrupt:
         logging.info("Bot interrupted by user.")
