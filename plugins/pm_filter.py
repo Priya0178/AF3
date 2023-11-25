@@ -29,7 +29,7 @@ logger.setLevel(logging.ERROR)
 BUTTONS = {}
 SPELL_CHECK = {}
 cooldown_dict = {} 
-wait_time = 65
+wait_time = 80
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
@@ -45,10 +45,10 @@ async def give_filter(client, message):
             await asyncio.sleep(time_left)
             await message.reply_text("You can send your request now!")
             return
+    cooldown_dict[user_id] = current_time
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
-    cooldown_dict[user_id] = current_time
 
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
@@ -67,6 +67,7 @@ async def pvt_filter(client, message):
             await message.reply("You can send your request now!")
             return
     try:
+        cooldown_dict[user_id] = current_time
         await message.reply("<b> Searching</b>")
         await message.reply("🔍")
         k = await manual_filters(client, message)
@@ -74,7 +75,7 @@ async def pvt_filter(client, message):
             await auto_filter(client, message)
     except UserIsBlocked:
         pass
-    cooldown_dict[user_id] = current_time
+
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
