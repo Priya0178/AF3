@@ -71,9 +71,11 @@ class Bot(Client):
                 yield message
                 current += 1
                 
-signal.signal(signal.SIGTERM, signal_handler)
 async def signal_handler():
     exit(0)
+    
+signal.signal(signal.SIGTERM, signal_handler)
+
     
 app = Bot()
 app.run()
