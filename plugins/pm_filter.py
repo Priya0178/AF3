@@ -29,10 +29,20 @@ logger.setLevel(logging.ERROR)
 BUTTONS = {}
 SPELL_CHECK = {}
 cooldown_dict = {} 
-
+wait_time = 60
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
+    user_id = message.from_user.id
+    current_time = time.time()
+    if user_id in cooldown_dict:
+        last_time = cooldown_dict[user_id]
+        elapsed_time = current_time - last_time
+
+        if elapsed_time <= wait_time:
+            # User is still in cooldown, show the cooldown message
+            await message.reply_text(f"Cooldown: Please wait {30 - int(elapsed_time)} seconds before sending another message.")
+            return
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
@@ -46,7 +56,7 @@ async def pvt_filter(client, message):
         last_time = cooldown_dict[user_id]
         elapsed_time = current_time - last_time
 
-        if elapsed_time <= 30:
+        if elapsed_time <= wait_time:
             # User is still in cooldown, show the cooldown message
             await message.reply_text(f"Cooldown: Please wait {30 - int(elapsed_time)} seconds before sending another message.")
             return
