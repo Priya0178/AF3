@@ -9,7 +9,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQ
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
-
+from bot import StartTime
 @Client.on_message(filters.command('id'))
 async def showid(client, message):
     chat_type = message.chat.type
@@ -72,7 +72,7 @@ async def who_is(client, message):
         return
     if from_user is None:
         return await status_message.edit("no valid user_id / message specified")
-    message_out_str = ""
+    message_out_str = f"<b>➲Uptime: {StartTime-time.time()}</b>\n"
     message_out_str += f"<b>➲First Name:</b> {from_user.first_name}\n"
     last_name = from_user.last_name or "<b>None</b>"
     message_out_str += f"<b>➲Last Name:</b> {last_name}\n"
