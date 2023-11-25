@@ -415,7 +415,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
             protect_content=True if ident == 'checksubp' else False
         )
     elif query.data == "pages":
-        return await query.answer()
+        try:
+            return await query.answer()
+        except:
+            pass
     elif query.data == "start":
         buttons = [[
             InlineKeyboardButton('🎬 Rᴇqᴜᴇꜱᴛ Mᴏᴠɪᴇ', callback_data='patty'),
