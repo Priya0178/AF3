@@ -71,7 +71,7 @@ class Bot(Client):
                 current += 1
 async def shut():
     print("Stopping bot...")
-    await Bot.stop()
+    await Bot.stop(True)
     
 async def restart():
     print("Restarting bot...")
