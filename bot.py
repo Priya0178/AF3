@@ -53,11 +53,11 @@ class Bot(Client):
         temp.B_NAME = me.first_name
         self.username = '@' + me.username
         logging.info(name)
-
+'''
     async def stop(self, *args):
         await super().stop()
         logging.info("Bot stopped. Bye.")
-    
+'''
     async def iter_messages(
         self,
         chat_id: Union[int, str],
