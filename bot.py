@@ -87,7 +87,7 @@ async def main():
         pass
     finally:
         loop.stop()
-        await app.stop_bot(block=False)
+        await app.stop_bot()
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
