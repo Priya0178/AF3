@@ -72,12 +72,8 @@ class Bot(Client):
             for message in messages:
                 yield message
                 current += 1
-async def restart():
+while True:
+    app = Bot()
+    app.run()
+    time.sleep(120)
     raise SystemExit()
-
-scheduler = BackgroundScheduler()
-scheduler.add_job(restart, 'interval', minutes=2)
-scheduler.start()
-
-app = Bot()
-app.run()
