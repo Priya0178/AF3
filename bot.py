@@ -72,7 +72,7 @@ class Bot(Client):
             for message in messages:
                 yield message
                 current += 1
-async def restart:
+async def restart():
     raise SystemExit()
 
 scheduler = BackgroundScheduler()
