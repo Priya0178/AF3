@@ -60,9 +60,10 @@ async def pvt_filter(client, message):
         elapsed_time = current_time - last_time
 
         if elapsed_time <= wait_time:
+            time_left = wait_time - int(elapsed_time)
             # User is still in cooldown, show the cooldown message
-            await message.reply_text(f"Cooldown: Please wait {wait_time - int(elapsed_time)} seconds before sending another message.")
-            asyncio.sleep(wait_time - int(elapsed_time)
+            await message.reply_text(f"Cooldown: Please wait {time_left} seconds before sending another message.")
+            asyncio.sleep(time_left)
             await message.reply("You can send your request now!")
             return
     try:
