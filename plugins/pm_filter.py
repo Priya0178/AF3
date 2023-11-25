@@ -631,8 +631,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
             return await query.message.edit_reply_markup(reply_markup)
-    return await query.answer('Piracy Is Crime')
-
 
 async def auto_filter(client, msg, spoll=False):
     if not spoll:
