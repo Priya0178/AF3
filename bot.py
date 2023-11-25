@@ -53,7 +53,11 @@ class Bot(Client):
         temp.B_NAME = me.first_name
         self.username = '@' + me.username
         logging.info(name)
-
+        
+    async def stop(self, *args):
+        await super().stop()
+        logging.info("Bot stopped. Bye.")
+        
     async def iter_messages(
         self,
         chat_id: Union[int, str],
@@ -84,7 +88,7 @@ scheduler.add_job(restart, 'interval', minutes=2)
 scheduler.start()
 
 try:
-    app = Bot()
-    loop.run_until_complete(app.run)
+    app = Bot().run()
+    loop.run_until_complete(app)
 except KeyboardInterrupt:
     shut()
