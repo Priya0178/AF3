@@ -42,7 +42,7 @@ async def give_filter(client, message):
         if elapsed_time <= wait_time:
             # User is still in cooldown, show the cooldown message
             await message.reply_text(f"Cooldown: Please wait {wait_time - int(elapsed_time)} seconds before sending another message.")
-            asyncio.sleep(wait_time - int(elapsed_time)
+            await asyncio.sleep(wait_time - int(elapsed_time)
             await message.reply("You can send your request now!")
             return
     k = await manual_filters(client, message)
