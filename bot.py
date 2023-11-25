@@ -1,7 +1,7 @@
 import logging
 import logging.config
 from apscheduler.schedulers.background import BackgroundScheduler
-# Get logging configurations
+import time
 logging.config.fileConfig('logging.conf')
 logging.getLogger().setLevel(logging.INFO)
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
