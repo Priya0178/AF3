@@ -342,6 +342,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             alert = alert.replace("\\n", "\n").replace("\\t", "\t")
             await query.answer(alert, show_alert=True)
     if query.data.startswith("file"):
+        grp_id = query.message.chat.id
         ident, file_id = query.data.split("#")
         files_ = await get_file_details(file_id)
         if not files_:
