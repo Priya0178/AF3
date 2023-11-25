@@ -374,11 +374,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 )
                 await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
-            await query.answer('Unblock the bot mahn !', show_alert=True)
+            await query.answer('Unblock the bot man !', show_alert=True)
         except PeerIdInvalid:
             await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
         except Exception as e:
-            await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+            buttons = [
+                InlineKeyboardButton('Share Link🎭', url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")]
+            reply_markup = InlineKeyboardMarkup(buttons)
+            await query.message.reply(f"<b> Your Link Has Been Generated!</b>",reply_markup=reply_markup)
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
             await query.answer("I Like Your Smartness, But Don't Be Oversmart 😒", show_alert=True)
@@ -646,7 +649,7 @@ async def auto_filter(client, msg, spoll=False):
                 try:
                     k = await message.reply(f"<b>No Movie Result found.\nSearch in Google for correct Spelling and Year</b>", reply_markup=InlineKeyboardMarkup(ntn))
                 except:
-                    k = await message.reply("<b> Invalid Movie Name!")
+                    k = await message.reply("<b> Invalid Movie Name!<b>")
                 await asyncio.sleep(300)
                 await k.delete()
                 return
