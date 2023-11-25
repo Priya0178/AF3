@@ -1,3 +1,4 @@
+#LINE 39 HAS TO BE CHANGED
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid
 from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, ADMINS
@@ -36,7 +37,7 @@ class temp(object):
     CURRENT=int(os.environ.get("SKIP", 2))
     CANCEL = False
     MELCOW = {}
-    U_NAME = None
+    U_NAME = "searchonbot"
     B_NAME = None
     SETTINGS = {}
 
