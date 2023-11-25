@@ -68,7 +68,7 @@ async def start(client, message):
             ))
             client._link = link.invite_link
         except FloodWait as e:
-            logger.info(f"Sleeping for {str(e)}s")
+            logger.info(f"Sleeping for {str(e.value)} seconds")
             await asyncio.sleep(int(e.value))
         except ChatAdminRequired:
             logger.error("Make sure Bot is admin in Forcesub channel")
