@@ -2,7 +2,6 @@
 
 git stash
 git pull
-chmod +x your_script.sh
 pip install -r requirements.txt
 script_name="bot.py"
 
