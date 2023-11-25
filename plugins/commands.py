@@ -41,7 +41,7 @@ async def start(client, message):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         try:
             await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
-        Except Floodwait as e:
+        except Floodwait as e:
             await asyncio.sleep(e.value)
     if len(message.command) != 2:
         buttons = [[
