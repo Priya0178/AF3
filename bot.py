@@ -78,12 +78,11 @@ async def shut():
     await app.stop()
     
 async def restart():
-    app = Bot()
-    app.run()
-    print("Bot is online...")
-    asyncio.sleep(190)
-    await shut()
+    while True:
+        app = Bot()
+        app.run()
+        print("Bot is online...")
+        asyncio.sleep(120)
+        await shut()
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(restart, 'interval', minutes=2)
-scheduler.start()
+loop.run_until_complete(restart)
