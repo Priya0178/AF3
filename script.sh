@@ -24,7 +24,7 @@ while true; do
     start_bot
 
     # Sleep for 10 minutes
-    sleep 600
+    sleep 6000
 
     stop_bot
 done
