@@ -79,10 +79,10 @@ async def pvt_filter(client, message):
         k = await manual_filters(client, message)
         if k == False:
             await auto_filter(client, message)
+        await m1.delete()
+        await m2.delete()
     except UserIsBlocked:
         pass
-    await m1.delete()
-    await m2.delete()
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
@@ -905,6 +905,6 @@ async def manual_filters(client, message, text=False):
                         )
                 except Exception as e:
                     logger.exception(e)
-                break
+                    break
     else:
         return False
