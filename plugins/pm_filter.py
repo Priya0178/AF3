@@ -92,7 +92,7 @@ async def pvt_filter(client, message):
             chat_id=int(AUTH_CHANNEL),
             creates_join_request=True
             ))
-            client._link = link.invite_link
+            clink = link.invite_link
         except FloodWait as e:
             logger.info(f"Sleeping for {str(e.value)} seconds")
             await asyncio.sleep(int(e.value))
@@ -102,7 +102,7 @@ async def pvt_filter(client, message):
         btn = [
             [
                 InlineKeyboardButton(
-                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=client._link
+                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=clink
                 )
             ]
         ]
