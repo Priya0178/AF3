@@ -375,10 +375,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
             alert = alert.replace("\\n", "\n").replace("\\t", "\t")
             await query.answer(alert, show_alert=True)
     if query.data.startswith("file"):
+        await query.answer("Searching File 🗃️")
+        await query.message.edit_text("Sending File Please Wait!")
         grp_id = query.message.chat.id
         ident, file_id = query.data.split("#")
         files_ = await get_file_details(file_id)
-        await query.message.edit_text("Sending File Please Wait!")
         if not files_:
             return await query.answer('No such file exist.')
         files = files_[0]
