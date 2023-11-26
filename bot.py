@@ -72,14 +72,25 @@ class Bot(Client):
                 yield message
                 current += 1
 app = Bot()
-async def signal_handler():
-    await app.stop_bot()
 
-signal.signal(signal.SIGINT, signal_handler)
+timeout_duration = 100 seconds
+def timeout_handler(signum, frame):
+    print("Timeout reached. Exiting...")
+    exit(1)
+signal.signal(signal.SIGALRM, timeout_handler)
 
 
 try:
+    signal.alarm(timeout_duration)
     loop = asyncio.get_event_loop()
     loop.run_until_complete(app.run())
 except KeyboardInterrupt:
-   loop.run_until_complete(app.stop_bot())
+    # Handle KeyboardInterrupt (Ctrl+C) separately if needed
+    print("Bot interrupted by user. Exiting...")
+
+except Exception as e:
+    # Handle other exceptions as needed
+    print(f"An error occurred: {e}")
+finally:
+    # Disable the alarm when the script exits
+    signal.alarm(0)
