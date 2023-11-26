@@ -78,7 +78,7 @@ async def answer(bot, query):
                 document_file_id=file.file_id,
                 caption=batman,
                 description=f'Size: {get_size(file.file_size)}\nType: {file.file_type}',
-                reply_markup=reply_markup))
+        )
 
     if results:
         switch_pm_text = f"{emoji.FILE_FOLDER} Results - {total}"
