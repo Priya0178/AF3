@@ -68,11 +68,11 @@ async def answer(bot, query):
                 f_caption=f_caption
         if f_caption is None:
             f_caption = f"{files.file_name}"
-        """
-        batman = re.sub(r'@\w+', '', f_caption)
-        batman = re.sub('#𝙊𝙍𝙂𝙋𝙧𝙞𝙢𝙚', '', batman)
-        batman = re.sub('#𝙉𝙤𝟏', '', batman)
-        batman = re.sub('#𝙐𝙃𝘿𝙋𝙧𝙞𝙢𝙚', '', batman)"""
+        
+        f_caption= re.sub(r'@\w+', '', f_caption)
+        f_caption = re.sub('#𝙊𝙍𝙂𝙋𝙧𝙞𝙢𝙚', '', f_caption)
+        f_caption = re.sub('#𝙉𝙤𝟏', '', f_caption)
+        f_caption = re.sub('#𝙐𝙃𝘿𝙋𝙧𝙞𝙢𝙚', '', f_caption)
         results.append(
         InlineQueryResultCachedDocument(
                 title=file.file_name,
