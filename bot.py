@@ -74,18 +74,12 @@ class Bot(Client):
 app = Bot()
 async def signal_handler():
     await app.stop_bot()
+    SystemExit()
 
 signal.signal(signal.SIGTERM, signal_handler)
 
 
-async def main():
     try:
-        await app.run()
-
-    except KeyboardInterrupt:
-        logging.info("Bot interrupted by user.")
-        await app.stop_bot()
-
-if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+        app.run()
+    except:
+        SystemExit()
