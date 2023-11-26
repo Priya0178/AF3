@@ -85,7 +85,8 @@ async def pvt_filter(client, message):
             parse_mode=enums.ParseMode.MARKDOWN
             )
         except UserIsBlocked:
-            pass    
+            pass
+    return
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
