@@ -52,6 +52,7 @@ async def give_filter(client, message):
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
+    return
 
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
@@ -108,8 +109,9 @@ async def pvt_filter(client, message):
             await auto_filter(client, message)
         await m1.delete()
         await m2.delete()
+        return
     except UserIsBlocked:
-        pass
+        return
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
@@ -491,7 +493,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             protect_content=True if ident == 'checksubp' else False
         )
         except:
-            pass
+            return
     elif query.data == "start":
         buttons = [[
             InlineKeyboardButton('🎬 Rᴇqᴜᴇꜱᴛ Mᴏᴠɪᴇ', callback_data='patty'),
@@ -704,7 +706,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
             return await query.message.edit_reply_markup(reply_markup)
-
+      
+    return
 async def auto_filter(client, msg, spoll=False):
     if not spoll:
         message = msg
@@ -828,16 +831,18 @@ async def auto_filter(client, msg, spoll=False):
             await asyncio.sleep(180)
             await message.delete()
             await voo.delete()
+            return
         except:
-            pass
+            return
     else:
         try:
             voo = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
             await asyncio.sleep(180)
             await message.delete()
             await voo.delete()
+            return
         except:
-            pass
+            return
 
 
 async def advantage_spell_chok(msg):
@@ -938,6 +943,6 @@ async def manual_filters(client, message, text=False):
                         )
                 except Exception as e:
                     logger.exception(e)
-                    break
+                    return
     else:
         return False
