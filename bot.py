@@ -73,15 +73,8 @@ class Bot(Client):
                 current += 1
 app = Bot()
 
-timeout_duration = 1220 #seconds
-def timeout_handler(signum, frame):
-    print("Timeout reached. Exiting...")
-    exit(1)
-signal.signal(signal.SIGALRM, timeout_handler)
-
 
 try:
-    signal.alarm(timeout_duration)
     loop = asyncio.get_event_loop()
     loop.run_until_complete(app.run())
 except KeyboardInterrupt:
@@ -91,6 +84,3 @@ except KeyboardInterrupt:
 except Exception as e:
     # Handle other exceptions as needed
     print(f"An error occurred: {e}")
-finally:
-    # Disable the alarm when the script exits
-    signal.alarm(0)
