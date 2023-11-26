@@ -48,6 +48,7 @@ async def give_filter(client, message):
             return
     m1 = await message.reply("<b> Searching</b>")
     m2 = await message.reply("🔍")
+    asyncio.sleep(3)
     await m1.delete()
     await m2.delete()
     cooldown_dict[user_id] = current_time
