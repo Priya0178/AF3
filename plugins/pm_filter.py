@@ -417,7 +417,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 try:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
                 except:
-                    pass
+              
                     return
         except UserIsBlocked:
             return
@@ -430,7 +430,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             try:
                 await query.answer("I Like Your Smartn, But Don't Be Oversmart 😒", show_alert=True)
             except:
-                pass
+                return
             return
         ident, file_id = query.data.split("#")
         files_ = await get_file_details(file_id)
