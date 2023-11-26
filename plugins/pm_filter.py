@@ -29,7 +29,7 @@ logger.setLevel(logging.ERROR)
 BUTTONS = {}
 SPELL_CHECK = {}
 cooldown_dict = {} 
-wait_time = 80
+wait_time = 60
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
@@ -48,9 +48,6 @@ async def give_filter(client, message):
             return
     m1 = await message.reply("<b> Searching</b>")
     m2 = await message.reply("🔍")
-    asyncio.sleep(3)
-    await m1.delete()
-    await m2.delete()
     cooldown_dict[user_id] = current_time
     k = await manual_filters(client, message)
     if k == False:
