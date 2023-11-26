@@ -41,8 +41,9 @@ async def give_filter(client, message):
 
         if elapsed_time <= wait_time:
             time_left = wait_time - int(elapsed_time)
-            await message.reply_text(f"Cooldown: Please wait {time_left} seconds before sending another message.")
+            r = await message.reply_text(f"Cooldown: Please wait {time_left} seconds before sending another message.")
             await asyncio.sleep(time_left)
+            await r.delete()
             await message.reply_text("You can send your request now!")
             return
     cooldown_dict[user_id] = current_time
@@ -62,17 +63,20 @@ async def pvt_filter(client, message):
         if elapsed_time <= wait_time:
             time_left = wait_time - int(elapsed_time)
             # User is still in cooldown, show the cooldown message
-            await message.reply_text(f"Cooldown: Please wait {time_left} seconds before sending another message.")
+            await r = message.reply_text(f"Cooldown: Please wait {time_left} seconds before sending another message.")
             await asyncio.sleep(time_left)
+            await r.delete()
             await message.reply("You can send your request now!")
             return
     try:
         cooldown_dict[user_id] = current_time
-        await message.reply("<b> Searching</b>")
-        await message.reply("🔍")
+        m1 = await message.reply("<b> Searching</b>")
+        m2 = await message.reply("🔍")
         k = await manual_filters(client, message)
         if k == False:
             await auto_filter(client, message)
+        await m1.delete()
+        await m2.delete()
     except UserIsBlocked:
         pass
 
