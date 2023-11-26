@@ -73,7 +73,7 @@ class Bot(Client):
                 current += 1
 app = Bot()
 async def signal_handler():
-    await app.stop_bot
+    await app.stop_bot()
 
 signal.signal(signal.SIGINT, signal_handler)
 
@@ -82,4 +82,4 @@ try:
     loop = asyncio.get_event_loop()
     loop.run_until_complete(app.run())
 except KeyboardInterrupt:
-    SystemExit()
+   await app.stop_bot()
