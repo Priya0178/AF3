@@ -33,9 +33,7 @@ class Bot(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
-            workers=10,
-            plugins={"root": "plugins"},
-            sleep_threshold=10,
+            plugins={"root": "plugins"}
         )
 
     async def start_bot(self):
