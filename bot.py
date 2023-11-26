@@ -82,4 +82,4 @@ try:
     loop = asyncio.get_event_loop()
     loop.run_until_complete(app.run())
 except KeyboardInterrupt:
-   await app.stop_bot()
+   loop.run_until_complete(app.stop_bot())
