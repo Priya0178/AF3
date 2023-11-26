@@ -46,10 +46,14 @@ async def give_filter(client, message):
             await r.delete()
             await message.reply_text("You can send your request now!")
             return
+    m1 = await message.reply("<b> Searching</b>")
+    m2 = await message.reply("🔍")
     cooldown_dict[user_id] = current_time
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
+    await m1.delete()
+    await m2.delete()
 
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
@@ -669,8 +673,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
             return await query.message.edit_reply_markup(reply_markup)
 
 async def auto_filter(client, msg, spoll=False):
-    m1 = await message.reply("<b> Searching</b>")
-    m2 = await message.reply("🔍")
     if not spoll:
         message = msg
         settings = await get_settings(message.chat.id)
@@ -694,10 +696,8 @@ async def auto_filter(client, msg, spoll=False):
                     k = await message.reply(f"<b>No Movie Result found.\nSearch in Google for correct Spelling and Year</b>", reply_markup=InlineKeyboardMarkup(ntn))
                 except:
                     k = await message.reply("<b> Invalid Movie Name!<b>")
-                await asyncio.sleep(300)
+                await asyncio.sleep(10)
                 await k.delete()
-                await m1.delete()
-                await m2.delete()
                 return
         else:
             return
@@ -869,8 +869,6 @@ async def manual_filters(client, message, text=False):
     for keyword in reversed(sorted(keywords, key=len)):
         pattern = r"( |^|[^\w])" + re.escape(keyword) + r"( |$|[^\w])"
         if re.search(pattern, name, flags=re.IGNORECASE):
-            m1 = await message.reply("<b> Searching</b>")
-            m2 = await message.reply("🔍")
             reply_text, btn, alert, fileid = await find_filter(group_id, keyword)
 
             if reply_text:
@@ -908,7 +906,5 @@ async def manual_filters(client, message, text=False):
                 except Exception as e:
                     logger.exception(e)
                 break
-                await m1.delete()
-                await m2.delete()
     else:
         return False
