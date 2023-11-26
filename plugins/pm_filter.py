@@ -75,11 +75,10 @@ async def pvt_filter(client, message):
         k = await manual_filters(client, message)
         if k == False:
             await auto_filter(client, message)
-        await m1.delete()
-        await m2.delete()
     except UserIsBlocked:
         pass
-
+    await m1.delete()
+    await m2.delete()
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
@@ -375,7 +374,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             alert = alert.replace("\\n", "\n").replace("\\t", "\t")
             await query.answer(alert, show_alert=True)
     if query.data.startswith("file"):
-        await query.answer("Searching File 🗃️")
+        await query.answer("Searching File 🗃️",show_alert=True)
         await query.message.edit_text("Sending File Please Wait!")
         grp_id = query.message.chat.id
         ident, file_id = query.data.split("#")
