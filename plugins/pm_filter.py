@@ -34,35 +34,6 @@ wait_time = 60
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
     user_id = message.from_user.id
-    if AUTH_CHANNEL and not await is_subscribed(client, message):
-        try:
-            link = (await client.create_chat_invite_link(
-            chat_id=int(AUTH_CHANNEL),
-            creates_join_request=True
-            ))
-            client._link = link.invite_link
-        except FloodWait as e:
-            logger.info(f"Sleeping for {str(e.value)} seconds")
-            await asyncio.sleep(int(e.value))
-        except ChatAdminRequired:
-            logger.error("Make sure Bot is admin in Forcesub channel")
-            return
-        btn = [
-            [
-                InlineKeyboardButton(
-                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=client._link
-                )
-            ]
-        ]
-        try:
-            await client.send_message(
-            chat_id=message.from_user.id,
-            text="**Please Join My Updates Channel to use this Bot!**",
-            reply_markup=InlineKeyboardMarkup(btn),
-            parse_mode=enums.ParseMode.MARKDOWN
-            )
-        except UserIsBlocked:
-            pass
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
@@ -92,7 +63,7 @@ async def pvt_filter(client, message):
             chat_id=int(AUTH_CHANNEL),
             creates_join_request=True
             ))
-            clink = link.invite_link
+            client._link = link.invite_link
         except FloodWait as e:
             logger.info(f"Sleeping for {str(e.value)} seconds")
             await asyncio.sleep(int(e.value))
@@ -102,7 +73,7 @@ async def pvt_filter(client, message):
         btn = [
             [
                 InlineKeyboardButton(
-                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=clink
+                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=client._link
                 )
             ]
         ]
@@ -114,8 +85,7 @@ async def pvt_filter(client, message):
             parse_mode=enums.ParseMode.MARKDOWN
             )
         except UserIsBlocked:
-            pass
-    return
+            pass    
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
