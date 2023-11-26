@@ -79,6 +79,6 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 
 try:
-    app.run()
+    app.start_bot()
 except:
     SystemExit()
