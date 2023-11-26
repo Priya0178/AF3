@@ -242,8 +242,8 @@ async def start(client, message):
             await asyncio.sleep(600)
             await msg.delete()
             return
-        except:
-            pass
+        except Exception as e:
+            logger.exception(e)
         return await message.reply('No such file exist.')
     files = files_[0]
     title = files.file_name
@@ -268,8 +268,8 @@ async def start(client, message):
         caption=batman,
         protect_content=True if pre == 'filep' else False,
     ) 
-    except:
-        pass
+    except Exception as e:
+        logger.exception(e)
 
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
