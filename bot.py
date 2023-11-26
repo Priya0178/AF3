@@ -79,7 +79,7 @@ async def signal_handler():
 signal.signal(signal.SIGTERM, signal_handler)
 
 
-    try:
-        app.run()
-    except:
-        SystemExit()
+try:
+    app.run()
+except:
+    SystemExit()
