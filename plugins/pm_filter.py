@@ -48,12 +48,12 @@ async def give_filter(client, message):
             return
     m1 = await message.reply("<b> Searching</b>")
     m2 = await message.reply("🔍")
+    await m1.delete()
+    await m2.delete()
     cooldown_dict[user_id] = current_time
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
-    await m1.delete()
-    await m2.delete()
 
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
