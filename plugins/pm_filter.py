@@ -374,6 +374,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         grp_id = query.message.chat.id
         ident, file_id = query.data.split("#")
         files_ = await get_file_details(file_id)
+        await query.message.edit_text("Sending File Please Wait!")
         if not files_:
             return await query.answer('No such file exist.')
         files = files_[0]
@@ -413,9 +414,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         except PeerIdInvalid:
             await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
             return
-        except:
-            pass
-            return
+        except Exception as e:
+            logging.exception(e)
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
             try:
