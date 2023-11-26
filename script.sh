@@ -21,8 +21,8 @@ while true; do
     update
     start_bot
 
-    # Sleep for 2 minutes
-    sleep 120
+    # Sleep for 5 minutes
+    sleep 300
 
     stop_bot
 done
