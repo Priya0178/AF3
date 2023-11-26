@@ -79,6 +79,7 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 
 try:
-    app.start_bot()
-except:
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(start_bot())
+except KeyboardInterrupt:
     SystemExit()
