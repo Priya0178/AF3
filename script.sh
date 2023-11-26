@@ -11,7 +11,6 @@ start_bot() {
     echo "Starting $script_name..."
     { python3 "$script_name" 2>&1; } | tee /dev/tty &
 }
-}
 
 stop_bot() {
     # Use pkill to send SIGTERM to the process with the specified name
