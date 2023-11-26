@@ -19,6 +19,8 @@ stop_bot() {
 
 while true; do
     update
+    stop_bot
+    clear
     start_bot
 
     # Sleep for 5 minutes
