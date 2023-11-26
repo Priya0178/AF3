@@ -73,7 +73,6 @@ class Bot(Client):
                 current += 1
 app = Bot()
 async def signal_handler():
-    await app.stop_bot()
     SystemExit()
 
 signal.signal(signal.SIGTERM, signal_handler)
