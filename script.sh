@@ -1,10 +1,10 @@
 #!/bin/bash
 
+script_name="bot.py"
 update() {
     git stash
     git pull
     pip install -r requirements.txt
-    script_name="bot.py"
 }
 
 start_bot() {
@@ -14,7 +14,7 @@ start_bot() {
 
 stop_bot() {
     # Use pkill to send SIGTERM to the process with the specified name
-    pkill -f "$script_name"
+    pkill -9 -f "$script_name"
 }
 
 while true; do
