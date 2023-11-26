@@ -63,7 +63,6 @@ async def give_filter(client, message):
             )
         except UserIsBlocked:
             pass
-    return
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
