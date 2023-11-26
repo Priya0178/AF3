@@ -1,4 +1,4 @@
-http://github.com/openfilesteam/pyrogrammod
+git+http://github.com/openfilesteam/pyrogrammod
 tgcrypto
 pymongo[srv]==3.12.3
 motor==2.5.1
