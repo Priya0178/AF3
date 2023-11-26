@@ -9,10 +9,7 @@ update() {
 
 start_bot() {
     echo "Starting $script_name..."
-    python3 "$script_name" > bot.log 2>&1 &
-
-    # Tail the log file to see live logs
-    tail -f bot.log
+    python3 "$script_name" 2>&1 | tee /dev/tty &
 }
 
 stop_bot() {
