@@ -73,7 +73,7 @@ class Bot(Client):
                 current += 1
 app = Bot()
 
-timeout_duration = 100 seconds
+timeout_duration = 100 #seconds
 def timeout_handler(signum, frame):
     print("Timeout reached. Exiting...")
     exit(1)
