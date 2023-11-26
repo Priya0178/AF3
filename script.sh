@@ -23,8 +23,8 @@ while true; do
     clear
     start_bot
 
-    # Sleep for 5 minutes
-    sleep 300
+    # Sleep for 3.5 minutes
+    sleep 210
 
     stop_bot
 done
