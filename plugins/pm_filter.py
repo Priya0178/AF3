@@ -25,7 +25,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
-inv_link = "nothing"
+
 BUTTONS = {}
 SPELL_CHECK = {}
 cooldown_dict = {} 
@@ -57,27 +57,24 @@ async def give_filter(client, message):
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pvt_filter(client, message):
-    global inv_link
     user_id = message.from_user.id
     if AUTH_CHANNEL and not await is_subscribed(client, message):
         try:
-            if inv_link == "nothing":
-                link = (await client.create_chat_invite_link(
-                chat_id=int(AUTH_CHANNEL),
-                creates_join_request=True
-                ))
-                inv_link = link.invite_link
+            link = (await client.create_chat_invite_link(
+            chat_id=int(AUTH_CHANNEL),
+            creates_join_request=True
+            ))
+            client._link = link.invite_link
         except FloodWait as e:
             logger.info(f"Sleeping for {str(e.value)} seconds")
             await asyncio.sleep(int(e.value))
         except ChatAdminRequired:
             logger.error("Make sure Bot is admin in Forcesub channel")
-        except Exception as e:
-            logging.info(e)
+            return
         btn = [
             [
                 InlineKeyboardButton(
-                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=inv_link
+                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=client._link
                 )
             ]
         ]
