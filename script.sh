@@ -1,6 +1,7 @@
 #!/bin/bash
 
 script_name="bot.py"
+
 update() {
     git stash
     git pull
@@ -13,8 +14,10 @@ start_bot() {
 }
 
 stop_bot() {
-    # Use pkill to send SIGTERM to the process with the specified name
+    echo "Stopping $script_name..."
     pkill -9 -f "$script_name"
+    wait $!
+    echo "$script_name stopped."
 }
 
 while true; do
@@ -24,7 +27,7 @@ while true; do
     start_bot
 
     # Sleep for 10 minutes
-    sleep 600
+    sleep 120
 
     stop_bot
 done
