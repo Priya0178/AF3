@@ -29,7 +29,7 @@ async def add_filter(grp_id, text, reply_text, btn, file, alert):
              
      
 async def find_filter(group_id, name):
-    mycol = await mydb[str(group_id)]
+    mycol = mydb[str(group_id)]
     
     query = await mycol.find( {"text":name})
     # query = mycol.find( { "$text": {"$search": name}})
@@ -48,7 +48,7 @@ async def find_filter(group_id, name):
 
 
 async def get_filters(group_id):
-    mycol = await mydb[str(group_id)]
+    mycol = mydb[str(group_id)]
 
     texts = []
     query = await mycol.find()
@@ -62,7 +62,7 @@ async def get_filters(group_id):
 
 
 async def delete_filter(message, text, group_id):
-    mycol = await mydb[str(group_id)]
+    mycol = mydb[str(group_id)]
     
     myquery = {'text':text }
     query = mycol.count_documents(myquery)
