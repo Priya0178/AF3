@@ -140,7 +140,7 @@ def encode_file_ref(file_ref: bytes) -> str:
     return base64.urlsafe_b64encode(file_ref).decode().rstrip("=")
 
 
-def unpack_new_file_id(new_file_id):
+async def unpack_new_file_id(new_file_id):
     """Return file_id, file_ref"""
     decoded = FileId.decode(new_file_id)
     file_id = await encode_file_id(
