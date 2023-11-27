@@ -86,7 +86,7 @@ async def pvt_filter(client, message):
             parse_mode=enums.ParseMode.MARKDOWN
             )
         except UserIsBlocked:
-            pass    
+            return    
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
@@ -125,9 +125,10 @@ async def next_page(bot, query):
     if not search:
         try:
             await query.answer("You are using one of my old messages, please send the request again.", show_alert=True)
+            return
         except:
-            pass
-        return
+            return
+        
 
     files, n_offset, total = await get_search_results(search, offset=offset, filter=True)
     try:
@@ -192,7 +193,7 @@ async def next_page(bot, query):
         )
         await query.answer()
     except:
-        pass
+        return
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
@@ -271,7 +272,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 try:
                     await query.message.reply_to_message.delete()
                 except:
-                    pass
+                    return
             else:
                 await query.answer("That's not for you!!", show_alert=True)
     elif "groupcb" in query.data:
@@ -390,7 +391,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     ]
                 )
             except:
-                pass
+                return
         if buttons:
             await query.message.edit_text(
                 "Your connected group details ;\n\n",
