@@ -100,11 +100,11 @@ async def get_search_results(query, file_type=None, max_results=10, offset=0, fi
     if next_offset > total_results:
         next_offset = ''
 
-    cursor = await Media.find(filter)
+    cursor = Media.find(filter)
     # Sort by recent
-    await cursor.sort('$natural', -1)
+    cursor.sort('$natural', -1)
     # Slice files according to offset and max results
-    await cursor.skip(offset).limit(max_results)
+    cursor.skip(offset).limit(max_results)
     # Get list of files
     files = await cursor.to_list(length=max_results)
 
@@ -114,7 +114,7 @@ async def get_search_results(query, file_type=None, max_results=10, offset=0, fi
 
 async def get_file_details(query):
     filter = {'file_id': query}
-    cursor = await Media.find(filter)
+    cursor = Media.find(filter)
     filedetails = await cursor.to_list(length=1)
     return filedetails
 
@@ -140,10 +140,10 @@ def encode_file_ref(file_ref: bytes) -> str:
     return base64.urlsafe_b64encode(file_ref).decode().rstrip("=")
 
 
-async def unpack_new_file_id(new_file_id):
+def unpack_new_file_id(new_file_id):
     """Return file_id, file_ref"""
     decoded = FileId.decode(new_file_id)
-    file_id = await encode_file_id(
+    file_id = encode_file_id(
         pack(
             "<iiqq",
             int(decoded.file_type),
@@ -152,5 +152,5 @@ async def unpack_new_file_id(new_file_id):
             decoded.access_hash
         )
     )
-    file_ref = await encode_file_ref(decoded.file_reference)
+    file_ref = encode_file_ref(decoded.file_reference)
     return file_id, file_ref
