@@ -61,9 +61,8 @@ async def give_filter(client, message):
             reply_markup=InlineKeyboardMarkup(btn),
             parse_mode=enums.ParseMode.MARKDOWN
             )
-        except UserIsBlocked:
-            pass
-    return
+        except Exception as e:
+            logging.info(e)
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
@@ -99,7 +98,8 @@ async def pvt_filter(client, message):
             await asyncio.sleep(int(e.value))
         except ChatAdminRequired:
             logger.error("Make sure Bot is admin in Forcesub channel")
-            return
+        except Exception as e:
+            logger.info(e)
         btn = [
             [
                 InlineKeyboardButton(
@@ -114,9 +114,8 @@ async def pvt_filter(client, message):
             reply_markup=InlineKeyboardMarkup(btn),
             parse_mode=enums.ParseMode.MARKDOWN
             )
-        except UserIsBlocked:
-            pass
-    return
+        except Exception as e:
+            logger.info(e)
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
