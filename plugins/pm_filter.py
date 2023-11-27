@@ -116,7 +116,7 @@ async def pvt_filter(client, message):
             )
         except UserIsBlocked:
             pass
-    return
+        return
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
