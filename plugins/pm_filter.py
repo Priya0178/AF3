@@ -52,7 +52,6 @@ async def give_filter(client, message):
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
-    return
 
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
@@ -86,7 +85,7 @@ async def pvt_filter(client, message):
             parse_mode=enums.ParseMode.MARKDOWN
             )
         except UserIsBlocked:
-            return    
+            pass    
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
@@ -109,9 +108,8 @@ async def pvt_filter(client, message):
             await auto_filter(client, message)
         await m1.delete()
         await m2.delete()
-        return
     except UserIsBlocked:
-        return
+        pass
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
@@ -125,10 +123,9 @@ async def next_page(bot, query):
     if not search:
         try:
             await query.answer("You are using one of my old messages, please send the request again.", show_alert=True)
-            return
         except:
-            return
-        
+            pass
+        return
 
     files, n_offset, total = await get_search_results(search, offset=offset, filter=True)
     try:
@@ -193,7 +190,7 @@ async def next_page(bot, query):
         )
         await query.answer()
     except:
-        return
+        pass
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
@@ -272,7 +269,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 try:
                     await query.message.reply_to_message.delete()
                 except:
-                    return
+                    pass
             else:
                 await query.answer("That's not for you!!", show_alert=True)
     elif "groupcb" in query.data:
@@ -391,7 +388,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     ]
                 )
             except:
-                return
+                pass
         if buttons:
             await query.message.edit_text(
                 "Your connected group details ;\n\n",
@@ -494,7 +491,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             protect_content=True if ident == 'checksubp' else False
         )
         except:
-            return
+            pass
     elif query.data == "start":
         buttons = [[
             InlineKeyboardButton('🎬 Rᴇqᴜᴇꜱᴛ Mᴏᴠɪᴇ', callback_data='patty'),
@@ -707,8 +704,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
             return await query.message.edit_reply_markup(reply_markup)
-      
-    return
+
 async def auto_filter(client, msg, spoll=False):
     if not spoll:
         message = msg
@@ -832,18 +828,16 @@ async def auto_filter(client, msg, spoll=False):
             await asyncio.sleep(180)
             await message.delete()
             await voo.delete()
-            return
         except:
-            return
+            pass
     else:
         try:
             voo = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
             await asyncio.sleep(180)
             await message.delete()
             await voo.delete()
-            return
         except:
-            return
+            pass
 
 
 async def advantage_spell_chok(msg):
@@ -944,6 +938,6 @@ async def manual_filters(client, message, text=False):
                         )
                 except Exception as e:
                     logger.exception(e)
-                    return
+                    break
     else:
         return False
