@@ -15,7 +15,7 @@ import re
 import json
 import base64
 logger = logging.getLogger(__name__)
-client._link = "nothing"
+inv_link = "nothing"
 BATCH_FILES = {}
 
 @Client.on_message(filters.command("start") & filters.incoming)
@@ -65,12 +65,12 @@ async def start(client, message):
         return
     if AUTH_CHANNEL and not await is_subscribed(client, message):
         try:
-            if client._link == "nothing":
+            if inv_link == "nothing":
                 link = (await client.create_chat_invite_link(
                         chat_id=int(AUTH_CHANNEL),
                         creates_join_request=True
                     ))
-                client._link = link.invite_link
+                inv_link = link.invite_link
         except FloodWait as e:
             logger.info(f"Sleeping for {str(e.value)} seconds")
             await asyncio.sleep(int(e.value))
@@ -80,7 +80,7 @@ async def start(client, message):
         btn = [
             [
                 InlineKeyboardButton(
-                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=client._link
+                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=inv_link
                 )
             ]
         ]
