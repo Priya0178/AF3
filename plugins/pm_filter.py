@@ -57,6 +57,7 @@ async def give_filter(client, message):
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pvt_filter(client, message):
+    global inv_link
     user_id = message.from_user.id
     if AUTH_CHANNEL and not await is_subscribed(client, message):
         try:
@@ -71,7 +72,8 @@ async def pvt_filter(client, message):
             await asyncio.sleep(int(e.value))
         except ChatAdminRequired:
             logger.error("Make sure Bot is admin in Forcesub channel")
-            return
+        except Exception as e:
+            logging.info(e)
         btn = [
             [
                 InlineKeyboardButton(
