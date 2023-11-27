@@ -11,7 +11,7 @@ mydb = myclient[DATABASE_NAME]
 
 
 async def add_filter(grp_id, text, reply_text, btn, file, alert):
-    mycol = await mydb[str(grp_id)]
+    mycol = mydb[str(grp_id)]
     # mycol.create_index([('text', 'text')])
 
     data = {
@@ -31,7 +31,7 @@ async def add_filter(grp_id, text, reply_text, btn, file, alert):
 async def find_filter(group_id, name):
     mycol = mydb[str(group_id)]
     
-    query = await mycol.find( {"text":name})
+    query = mycol.find( {"text":name})
     # query = mycol.find( { "$text": {"$search": name}})
     try:
         for file in query:
@@ -51,7 +51,7 @@ async def get_filters(group_id):
     mycol = mydb[str(group_id)]
 
     texts = []
-    query = await mycol.find()
+    query = mycol.find()
     try:
         for file in query:
             text = file['text']
@@ -67,7 +67,7 @@ async def delete_filter(message, text, group_id):
     myquery = {'text':text }
     query = mycol.count_documents(myquery)
     if query == 1:
-        await mycol.delete_one(myquery)
+        mycol.delete_one(myquery)
         await message.reply_text(
             f"'`{text}`'  deleted. I'll not respond to that filter anymore.",
             quote=True,
