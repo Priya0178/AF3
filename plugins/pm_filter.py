@@ -34,35 +34,6 @@ wait_time = 60
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
     user_id = message.from_user.id
-    if AUTH_CHANNEL and not await is_subscribed(client, message):
-        try:
-            link = (await client.create_chat_invite_link(
-            chat_id=int(AUTH_CHANNEL),
-            creates_join_request=True
-            ))
-            client._link = link.invite_link
-        except FloodWait as e:
-            logger.info(f"Sleeping for {str(e.value)} seconds")
-            await asyncio.sleep(int(e.value))
-        except ChatAdminRequired:
-            logger.error("Make sure Bot is admin in Forcesub channel")
-            return
-        btn = [
-            [
-                InlineKeyboardButton(
-                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=client._link
-                )
-            ]
-        ]
-        try:
-            await client.send_message(
-            chat_id=message.from_user.id,
-            text="**Please Join My Updates Channel to use this Bot!**",
-            reply_markup=InlineKeyboardMarkup(btn),
-            parse_mode=enums.ParseMode.MARKDOWN
-            )
-        except Exception as e:
-            logging.info(e)
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
@@ -81,6 +52,7 @@ async def give_filter(client, message):
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
+    return
 
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
@@ -98,8 +70,7 @@ async def pvt_filter(client, message):
             await asyncio.sleep(int(e.value))
         except ChatAdminRequired:
             logger.error("Make sure Bot is admin in Forcesub channel")
-        except Exception as e:
-            logger.info(e)
+            return
         btn = [
             [
                 InlineKeyboardButton(
@@ -114,8 +85,8 @@ async def pvt_filter(client, message):
             reply_markup=InlineKeyboardMarkup(btn),
             parse_mode=enums.ParseMode.MARKDOWN
             )
-        except Exception as e:
-            logger.info(e)
+        except UserIsBlocked:
+            return    
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
@@ -138,8 +109,9 @@ async def pvt_filter(client, message):
             await auto_filter(client, message)
         await m1.delete()
         await m2.delete()
+        return
     except UserIsBlocked:
-        pass
+        return
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
@@ -153,9 +125,10 @@ async def next_page(bot, query):
     if not search:
         try:
             await query.answer("You are using one of my old messages, please send the request again.", show_alert=True)
+            return
         except:
-            pass
-        return
+            return
+        
 
     files, n_offset, total = await get_search_results(search, offset=offset, filter=True)
     try:
@@ -220,7 +193,7 @@ async def next_page(bot, query):
         )
         await query.answer()
     except:
-        pass
+        return
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
@@ -299,7 +272,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 try:
                     await query.message.reply_to_message.delete()
                 except:
-                    pass
+                    return
             else:
                 await query.answer("That's not for you!!", show_alert=True)
     elif "groupcb" in query.data:
@@ -418,7 +391,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     ]
                 )
             except:
-                pass
+                return
         if buttons:
             await query.message.edit_text(
                 "Your connected group details ;\n\n",
@@ -521,7 +494,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             protect_content=True if ident == 'checksubp' else False
         )
         except:
-            pass
+            return
     elif query.data == "start":
         buttons = [[
             InlineKeyboardButton('🎬 Rᴇqᴜᴇꜱᴛ Mᴏᴠɪᴇ', callback_data='patty'),
@@ -734,7 +707,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
             return await query.message.edit_reply_markup(reply_markup)
-
+      
+    return
 async def auto_filter(client, msg, spoll=False):
     if not spoll:
         message = msg
@@ -858,16 +832,18 @@ async def auto_filter(client, msg, spoll=False):
             await asyncio.sleep(180)
             await message.delete()
             await voo.delete()
+            return
         except:
-            pass
+            return
     else:
         try:
             voo = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
             await asyncio.sleep(180)
             await message.delete()
             await voo.delete()
+            return
         except:
-            pass
+            return
 
 
 async def advantage_spell_chok(msg):
@@ -968,6 +944,6 @@ async def manual_filters(client, message, text=False):
                         )
                 except Exception as e:
                     logger.exception(e)
-                    break
+                    return
     else:
         return False
