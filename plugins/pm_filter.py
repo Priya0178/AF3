@@ -29,7 +29,7 @@ logger.setLevel(logging.ERROR)
 BUTTONS = {}
 SPELL_CHECK = {}
 cooldown_dict = {} 
-wait_time = 60
+wait_time = 80
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
@@ -46,8 +46,6 @@ async def give_filter(client, message):
             await r.delete()
             await message.reply_text("You can send your request now!")
             return
-    m1 = await message.reply("<b> Searching</b>")
-    m2 = await message.reply("🔍")
     cooldown_dict[user_id] = current_time
     k = await manual_filters(client, message)
     if k == False:
@@ -57,35 +55,6 @@ async def give_filter(client, message):
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pvt_filter(client, message):
     user_id = message.from_user.id
-    if AUTH_CHANNEL and not await is_subscribed(client, message):
-        try:
-            link = (await client.create_chat_invite_link(
-            chat_id=int(AUTH_CHANNEL),
-            creates_join_request=True
-            ))
-            client._link = link.invite_link
-        except FloodWait as e:
-            logger.info(f"Sleeping for {str(e.value)} seconds")
-            await asyncio.sleep(int(e.value))
-        except ChatAdminRequired:
-            logger.error("Make sure Bot is admin in Forcesub channel")
-            return
-        btn = [
-            [
-                InlineKeyboardButton(
-                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=client._link
-                )
-            ]
-        ]
-        try:
-            await client.send_message(
-            chat_id=message.from_user.id,
-            text="**Please Join My Updates Channel to use this Bot!**",
-            reply_markup=InlineKeyboardMarkup(btn),
-            parse_mode=enums.ParseMode.MARKDOWN
-            )
-        except UserIsBlocked:
-            pass    
     current_time = time.time()
     if user_id in cooldown_dict:
         last_time = cooldown_dict[user_id]
@@ -106,10 +75,10 @@ async def pvt_filter(client, message):
         k = await manual_filters(client, message)
         if k == False:
             await auto_filter(client, message)
-        await m1.delete()
-        await m2.delete()
     except UserIsBlocked:
         pass
+    await m1.delete()
+    await m2.delete()
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
@@ -430,15 +399,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
         try:
             if AUTH_CHANNEL and not await is_subscribed(client, query):
-                try:
-                    await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
-                except:
-                    await query.message.reply(f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+                await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
             elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
-                
             else:
                 await client.send_cached_media(
                     chat_id=query.from_user.id,
@@ -446,23 +411,21 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     caption=f_caption,
                     protect_content=True if ident == "filep" else False 
                 )
-                try:
-                    await query.answer('Check PM, I have sent files in pm', show_alert=True)
-                except:
-              
-                    return
+                await query.answer('Check PM, I have sent files in pm', show_alert=True)
+                return
         except UserIsBlocked:
             return
         except PeerIdInvalid:
+            await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
             return
         except Exception as e:
             logging.exception(e)
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
             try:
-                await query.answer("I Like Your Smartn, But Don't Be Oversmart 😒", show_alert=True)
+                await query.answer("I Like Your Smartness, But Don't Be Oversmart 😒", show_alert=True)
             except:
-                return
+                pass
             return
         ident, file_id = query.data.split("#")
         files_ = await get_file_details(file_id)
@@ -729,7 +692,7 @@ async def auto_filter(client, msg, spoll=False):
                     k = await message.reply(f"<b>No Movie Result found.\nSearch in Google for correct Spelling and Year</b>", reply_markup=InlineKeyboardMarkup(ntn))
                 except:
                     k = await message.reply("<b> Invalid Movie Name!<b>")
-                await asyncio.sleep(10)
+                await asyncio.sleep(300)
                 await k.delete()
                 return
         else:
@@ -938,6 +901,6 @@ async def manual_filters(client, message, text=False):
                         )
                 except Exception as e:
                     logger.exception(e)
-                    break
+                break
     else:
         return False
