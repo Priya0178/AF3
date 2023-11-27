@@ -25,7 +25,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
-
+inv_link = "nothing"
 BUTTONS = {}
 SPELL_CHECK = {}
 cooldown_dict = {} 
@@ -60,11 +60,12 @@ async def pvt_filter(client, message):
     user_id = message.from_user.id
     if AUTH_CHANNEL and not await is_subscribed(client, message):
         try:
-            link = (await client.create_chat_invite_link(
-            chat_id=int(AUTH_CHANNEL),
-            creates_join_request=True
-            ))
-            client._link = link.invite_link
+            if inv_link == "nothing":
+                link = (await client.create_chat_invite_link(
+                chat_id=int(AUTH_CHANNEL),
+                creates_join_request=True
+                ))
+                inv_link = link.invite_link
         except FloodWait as e:
             logger.info(f"Sleeping for {str(e.value)} seconds")
             await asyncio.sleep(int(e.value))
@@ -74,7 +75,7 @@ async def pvt_filter(client, message):
         btn = [
             [
                 InlineKeyboardButton(
-                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=client._link
+                    "Jᴏɪɴ BᴀᴄᴋUᴘ Cʜᴀɴɴᴇʟ", url=inv_link
                 )
             ]
         ]
